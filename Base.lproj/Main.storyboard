@@ -85,7 +85,7 @@
                                 </variation>
                                 <connections>
                                     <action selector="saveDesc:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gSM-ho-jgl"/>
-                                    <segue destination="2hF-L3-cX8" kind="presentation" identifier="VCtoDrawView" id="tHU-vg-rmA"/>
+                                    <segue destination="2hF-L3-cX8" kind="show" identifier="VCtoDrawView" id="tHU-vg-rmA"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -240,7 +240,7 @@
                                     <rect key="frame" x="261" y="527" width="36" height="30"/>
                                 </variation>
                                 <connections>
-                                    <segue destination="aSt-4s-wz0" kind="presentation" id="Gse-rx-VZx"/>
+                                    <segue destination="aSt-4s-wz0" kind="show" identifier="DrawViewtoGuessView" id="Gse-rx-VZx"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7S1-5b-ULO" userLabel="Med Brush">
@@ -313,7 +313,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kSr-Xg-HBc" userLabel="savedImage">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                    <rect key="frame" x="0.0" y="55" width="320" height="400"/>
                                 </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Image Drawn:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tQS-M2-FHT">
@@ -351,7 +351,7 @@
                                     <rect key="frame" x="249" y="531" width="36" height="30"/>
                                 </variation>
                                 <connections>
-                                    <segue destination="2hF-L3-cX8" kind="presentation" identifier="GuessViewtoDrawView" id="TBy-9J-gHG"/>
+                                    <segue destination="2hF-L3-cX8" kind="show" identifier="GuessViewtoDrawView" id="TBy-9J-gHG"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -377,11 +377,12 @@
                     </view>
                     <connections>
                         <outlet property="guessTextField" destination="3BN-KC-yHq" id="f58-3u-uBx"/>
+                        <outlet property="savedImage" destination="kSr-Xg-HBc" id="lGn-zk-Dts"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AtW-fP-dqo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1651.5" y="305"/>
+            <point key="canvasLocation" x="1642.5" y="305"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
