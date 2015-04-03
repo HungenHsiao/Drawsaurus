@@ -39,7 +39,6 @@
 		DA0E37981ACB9B0F00EA8D22 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E37971ACB9B0F00EA8D22 /* DrawView.swift */; };
 		DA0E379A1ACCB1D300EA8D22 /* GuessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E37991ACCB1D300EA8D22 /* GuessView.swift */; };
 		DA448D591ACDBAC500AA9C74 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA448D581ACDBAC500AA9C74 /* Database.swift */; };
-		DACE400B1ACCD512007AA80D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DACE400A1ACCD512007AA80D /* .gitignore */; };
 		DACE400D1ACCEC2E007AA80D /* PhaseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE400C1ACCEC2E007AA80D /* PhaseInfo.swift */; };
 /* End PBXBuildFile section */
 
@@ -90,7 +89,6 @@
 		DA0E37971ACB9B0F00EA8D22 /* DrawView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 		DA0E37991ACCB1D300EA8D22 /* GuessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessView.swift; sourceTree = "<group>"; };
 		DA448D581ACDBAC500AA9C74 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
-		DACE400A1ACCD512007AA80D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .gitignore; path = Drawsaurus/.gitignore; sourceTree = "<group>"; };
 		DACE400C1ACCEC2E007AA80D /* PhaseInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhaseInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,7 +113,6 @@
 		DA0E37391ACB6CE500EA8D22 = {
 			isa = PBXGroup;
 			children = (
-				DACE400A1ACCD512007AA80D /* .gitignore */,
 				DA0E37441ACB6CE500EA8D22 /* Drawsaurus */,
 				DA0E375D1ACB6CE500EA8D22 /* DrawsaurusTests */,
 				DA0E37431ACB6CE500EA8D22 /* Products */,
@@ -308,7 +305,6 @@
 				DA0E378F1ACB976400EA8D22 /* Red.png in Resources */,
 				DA0E378E1ACB976400EA8D22 /* r.png in Resources */,
 				DA0E37871ACB976400EA8D22 /* DarkOrange.png in Resources */,
-				DACE400B1ACCD512007AA80D /* .gitignore in Resources */,
 				DA0E37931ACB976400EA8D22 /* Setting-2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
