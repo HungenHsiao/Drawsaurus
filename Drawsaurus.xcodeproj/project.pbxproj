@@ -39,6 +39,7 @@
 		DA0E37981ACB9B0F00EA8D22 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E37971ACB9B0F00EA8D22 /* DrawView.swift */; };
 		DA0E379A1ACCB1D300EA8D22 /* GuessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E37991ACCB1D300EA8D22 /* GuessView.swift */; };
 		DA448D591ACDBAC500AA9C74 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA448D581ACDBAC500AA9C74 /* Database.swift */; };
+		DA5FF01E1AD495D6002B885C /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FF01D1AD495D6002B885C /* ResultsViewController.swift */; };
 		DACE400D1ACCEC2E007AA80D /* PhaseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE400C1ACCEC2E007AA80D /* PhaseInfo.swift */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +90,7 @@
 		DA0E37971ACB9B0F00EA8D22 /* DrawView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 		DA0E37991ACCB1D300EA8D22 /* GuessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessView.swift; sourceTree = "<group>"; };
 		DA448D581ACDBAC500AA9C74 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		DA5FF01D1AD495D6002B885C /* ResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		DACE400C1ACCEC2E007AA80D /* PhaseInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhaseInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,6 +138,7 @@
 				DA0E374C1ACB6CE500EA8D22 /* ViewController.swift */,
 				DA0E37971ACB9B0F00EA8D22 /* DrawView.swift */,
 				DA0E37991ACCB1D300EA8D22 /* GuessView.swift */,
+				DA5FF01D1AD495D6002B885C /* ResultsViewController.swift */,
 				DA0E374E1ACB6CE500EA8D22 /* Main.storyboard */,
 				DA0E37511ACB6CE500EA8D22 /* Images.xcassets */,
 				DA0E37531ACB6CE500EA8D22 /* LaunchScreen.xib */,
@@ -330,6 +333,7 @@
 				DA0E37981ACB9B0F00EA8D22 /* DrawView.swift in Sources */,
 				DA448D591ACDBAC500AA9C74 /* Database.swift in Sources */,
 				DA0E37481ACB6CE500EA8D22 /* AppDelegate.swift in Sources */,
+				DA5FF01E1AD495D6002B885C /* ResultsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,17 +13,18 @@ class DrawViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "DrawViewtoGuessView" {
             let guessVC = segue.destinationViewController as? GuessViewController
-            guessVC?.receivedImage = imageToSend
+            guessVC?.receivedImage = mainImage.image
             guessVC?.database = database
+            guessVC?.receivedDesc = desc
         }
     }
-    //var imageHolder: UIImage?
-    //var stage: StageInfo = StageInfo(roundNumber: 1, description: "", imageSaved: imageHolder!)
     
-    
-    var database = Database()
     @IBOutlet var descLabel: UILabel!
-    
+    @IBOutlet var mainImage: UIImageView!
+    @IBOutlet var tempDrawImage: UIImageView!
+        
+    var database: Database!
+
     var red: CGFloat!
     var green: CGFloat!
     var blue: CGFloat!
@@ -31,14 +32,8 @@ class DrawViewController: UIViewController {
     var lastPoint: CGPoint!
     var opacity: CGFloat = 1.0
     var desc: String = ""
-    var imageToSend: UIImage?
-    var count = 1
     
     var mouseSwiped = false
-    
-    @IBOutlet var mainImage: UIImageView!
-    @IBOutlet var tempDrawImage: UIImageView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +43,6 @@ class DrawViewController: UIViewController {
         blue = 0.0
         descLabel.text = desc
     }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -58,21 +52,21 @@ class DrawViewController: UIViewController {
     @IBAction func colorSelected(sender: UIButton) {
         switch sender.tag {
         case 0:
-            red = 0.0
-            green = 0.0
-            blue = 0.0
+            red = 0/255.0
+            green = 0/255.0
+            blue = 0/255.0
         case 1:
-            red = 255.0 / 255.0
-            green = 0.0
-            blue = 0.0
+            red = 255/255.0
+            green = 0/255.0
+            blue = 0/255.0
         case 2:
-            red = 0.0
-            green = 0.0
-            blue = 255.0/255.0
+            red = 0/255.0
+            green = 0/255.0
+            blue = 255/255.0
         default:
-            red = 0.0
-            green = 0.0
-            blue = 0.0
+            red = 0/255.0
+            green = 0/255.0
+            blue = 0/255.0
         }
     }
     
@@ -97,12 +91,10 @@ class DrawViewController: UIViewController {
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
         mouseSwiped = true
         var currentPoint = touches.anyObject()?.locationInView(self.view)
-     //   println("\(currentPoint)")
         
         UIGraphicsBeginImageContext(self.view.frame.size)
-        let rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
         
-        self.tempDrawImage.image?.drawInRect(rect)
+        self.tempDrawImage.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
         CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
         CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint!.x, currentPoint!.y)
         CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound)
@@ -133,28 +125,14 @@ class DrawViewController: UIViewController {
             UIGraphicsEndImageContext()
         }
         
-        
-        
         //merge tempDrawImage with mainImage
         UIGraphicsBeginImageContext(self.view.frame.size)
         self.mainImage.image?.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: 1.0)
         self.tempDrawImage.image?.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: opacity)
         self.mainImage.image = UIGraphicsGetImageFromCurrentImageContext()
-        imageToSend = UIGraphicsGetImageFromCurrentImageContext()
-     //   if imageToSend != nil {
-            database.addPhase(newPhase: PhaseInfo(roundNumber: count, description: desc, imageSaved: UIGraphicsGetImageFromCurrentImageContext()))
-    //    }
+        
         self.tempDrawImage.image = nil
         UIGraphicsEndImageContext()
- /*
-        //takes a screenshot of the screen and sends to guessView
-        UIGraphicsBeginImageContextWithOptions(self.view.frame.size, false, 0.0)
-        view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates: true)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-  */
-    
-        println("image saved")
+     
     }
 }

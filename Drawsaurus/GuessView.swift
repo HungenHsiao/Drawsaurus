@@ -10,35 +10,45 @@ import UIKit
 
 class GuessViewController: UIViewController {
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GuessViewtoDrawView" {
+            let drawVC = segue.destinationViewController as? DrawViewController
+            drawVC?.desc = guessTextField.text
+            drawVC?.database = database
+        } else if segue.identifier == "GuessVCtoResultsVC" {
+            let resultsVC = segue.destinationViewController as? ResultsViewController
+            resultsVC?.database = database
+        }
+    }
+    
     @IBOutlet var guessTextField: UITextField!
     @IBOutlet var savedImage: UIImageView!
+    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet var showResultsButton: UIButton!
+    
     var receivedImage: UIImage!
-    var database = Database()
+    var database: Database!
+    var receivedDesc: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
         if receivedImage != nil {
-            var image: UIImage = receivedImage
-            let size = CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(0.5, 0.5))
-            savedImage = UIImageView(image: image)
+
+            database.addPhase(PhaseInfo(description: receivedDesc!, imageSaved: UIGraphicsGetImageFromCurrentImageContext()))
+            savedImage.image = receivedImage
             
-            savedImage.frame = CGRect(x: 0, y: 55, width: 320, height: 400)
-            view.addSubview(savedImage)
-            database.listPhases()
+            database.listPhases()  //prints the database in console
+        }
+        
+        if database.phases.count == 6 {
+            sendButton.hidden = true
+            showResultsButton.hidden = false
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "GuessViewtoDrawView" {
-            let drawVC = segue.destinationViewController as? DrawViewController
-            drawVC?.desc = guessTextField.text
-            drawVC?.database = database
-        }
-    }
+    } 
 }

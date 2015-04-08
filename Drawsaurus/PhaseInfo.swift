@@ -8,13 +8,13 @@
 
 import UIKit
 
-class PhaseInfo {
-    var roundNumber: Int
-    var description: String
-    var imageSaved: UIImage
+struct PhaseInfo {
+ //   var roundNumber: Int
+    var description: String = "Placeholder text"
+    var imageSaved: UIImage = UIImage(named: "placeholder.pdf")!
     
-    init(roundNumber _roundNumber: Int, description _description: String, imageSaved _imageSaved: UIImage) {
-        roundNumber = _roundNumber
+    init(description _description: String, imageSaved _imageSaved: UIImage) {
+   //     roundNumber = _roundNumber
         description = _description
         imageSaved = _imageSaved
     }

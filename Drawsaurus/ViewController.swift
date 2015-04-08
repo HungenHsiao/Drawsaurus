@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class ViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -17,14 +15,16 @@ class ViewController: UIViewController {
             let drawVC = segue.destinationViewController as? DrawViewController
             
             drawVC?.desc = textField.text
+            drawVC?.database = database
         }
     }
-//    @IBOutlet var drawView: DrawViewController!
+    
     @IBOutlet var submitDesc: UIButton!
     @IBOutlet var labelBG: UILabel!
     @IBOutlet var textField: UITextField!
+    @IBOutlet var newGameButton: UIButton!
     
-    var desc: String!
+    var database = Database()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,14 +36,11 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func newGame(sender: UIButton) {
+    @IBAction func newGame() {
+        newGameButton.hidden = true
         submitDesc.hidden = false
         labelBG.hidden = false
         textField.hidden = false
-    }
-    
-    @IBAction func saveDesc(sender: UIButton) {
-        desc = textField.description
     }
 }
 

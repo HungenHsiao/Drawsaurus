@@ -10,20 +10,17 @@ import Foundation
 import UIKit
 
 class Database {
+    
     var phases: [PhaseInfo] = []
    // var phase: PhaseInfo!
     
-    init() {
-
-    }
-    
-    func addPhase(#newPhase: PhaseInfo) {
+    func addPhase(newPhase: PhaseInfo) {
         phases.append(newPhase)
     }
     
     func listPhases() {
         for phase in phases {
-            println(phase.roundNumber)
+          //  println(phase.roundNumber)
             println(phase.description)
             println(phase.imageSaved)
         }
