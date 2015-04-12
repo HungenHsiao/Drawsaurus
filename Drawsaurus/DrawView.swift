@@ -83,32 +83,38 @@ class DrawViewController: UIViewController {
         }
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         mouseSwiped = false
-        lastPoint = touches.anyObject()?.locationInView(self.view)
+        if let currentTouch = touches.first as? UITouch {
+            lastPoint = currentTouch.locationInView(self.view)
+        }
     }
     
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         mouseSwiped = true
-        var currentPoint = touches.anyObject()?.locationInView(self.view)
         
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        
-        self.tempDrawImage.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
-        CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
-        CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint!.x, currentPoint!.y)
-        CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound)
-        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), brush)
-        CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), red, green, blue, 1.0)
-        CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeNormal)
-        
-        CGContextStrokePath(UIGraphicsGetCurrentContext())
-        self.tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext()
-        self.tempDrawImage.alpha = opacity
-        lastPoint = currentPoint
+        if let currentTouch = touches.first as? UITouch {
+            
+            var currentPoint = currentTouch.locationInView(self.view)
+            
+            UIGraphicsBeginImageContext(self.view.frame.size)
+            
+            self.tempDrawImage.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+            CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
+            CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y)
+            CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound)
+            CGContextSetLineWidth(UIGraphicsGetCurrentContext(), brush)
+            CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), red, green, blue, 1.0)
+            CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeNormal)
+            
+            CGContextStrokePath(UIGraphicsGetCurrentContext())
+            self.tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext()
+            self.tempDrawImage.alpha = opacity
+            lastPoint = currentPoint
+        }
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         let rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
         if !mouseSwiped {
             UIGraphicsBeginImageContext(self.view.frame.size)
