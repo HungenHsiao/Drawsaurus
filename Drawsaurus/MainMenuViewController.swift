@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainMenuViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "VCtoDrawView" {
             let drawVC = segue.destinationViewController as? DrawViewController
             
+            database.append(SentencePhase(sentence: textField.text))
             drawVC?.desc = textField.text
             drawVC?.database = database
         }
@@ -24,17 +25,7 @@ class ViewController: UIViewController {
     @IBOutlet var textField: UITextField!
     @IBOutlet var newGameButton: UIButton!
     
-    var database = Database()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    var database: [Phase] = []
     
     @IBAction func newGame() {
         newGameButton.hidden = true

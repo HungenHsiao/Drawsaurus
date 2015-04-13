@@ -23,7 +23,7 @@ class DrawViewController: UIViewController {
     @IBOutlet var mainImage: UIImageView!
     @IBOutlet var tempDrawImage: UIImageView!
         
-    var database: Database!
+    var database: [Phase]!
 
     var red: CGFloat!
     var green: CGFloat!
@@ -42,11 +42,6 @@ class DrawViewController: UIViewController {
         green = 0.0
         blue = 0.0
         descLabel.text = desc
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func colorSelected(sender: UIButton) {
