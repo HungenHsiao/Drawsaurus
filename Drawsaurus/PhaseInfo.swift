@@ -8,14 +8,25 @@
 
 import UIKit
 
-struct PhaseInfo {
- //   var roundNumber: Int
-    var description: String = "Placeholder text"
-    var imageSaved: UIImage = UIImage(named: "placeholder.pdf")!
+
+class Phase {
+
+}
+
+class SentencePhase: Phase {
+    var sentence: String = "Placeholder text"
     
-    init(description _description: String, imageSaved _imageSaved: UIImage) {
-   //     roundNumber = _roundNumber
-        description = _description
-        imageSaved = _imageSaved
+    init(sentence _sentence: String) {
+        sentence = _sentence
     }
 }
+
+
+class DrawingPhase: Phase {
+    var drawing: UIImage = UIImage(named: "placeholder.pdf")!
+    
+    init(drawing _drawing: UIImage) {
+        drawing = _drawing
+    }
+}
+

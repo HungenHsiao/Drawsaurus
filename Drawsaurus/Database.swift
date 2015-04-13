@@ -9,20 +9,13 @@
 import Foundation
 import UIKit
 
-class Database {
-    
-    var phases: [PhaseInfo] = []
-   // var phase: PhaseInfo!
-    
-    func addPhase(newPhase: PhaseInfo) {
-        phases.append(newPhase)
-    }
-    
-    func listPhases() {
-        for phase in phases {
-          //  println(phase.roundNumber)
-            println(phase.description)
-            println(phase.imageSaved)
+
+func listPhases(phases: [Phase]) {
+    for phase in phases {
+        if let drawingPhase = phase as? DrawingPhase {
+            println(drawingPhase.drawing)
+        } else if let sentencePhase = phase as? SentencePhase {
+            println(sentencePhase.sentence)
         }
     }
 }

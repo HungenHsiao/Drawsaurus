@@ -10,6 +10,17 @@ import UIKit
 
 class GuessViewController: UIViewController {
     
+    @IBOutlet var guessTextField: UITextField!
+    @IBOutlet var savedImage: UIImageView!
+    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet var showResultsButton: UIButton!
+    
+    var receivedImage: UIImage!
+    var database: [Phase]!
+    var receivedDesc: String?
+    
+    let numberOfGameIterations = 3
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GuessViewtoDrawView" {
             let drawVC = segue.destinationViewController as? DrawViewController
@@ -21,34 +32,22 @@ class GuessViewController: UIViewController {
         }
     }
     
-    @IBOutlet var guessTextField: UITextField!
-    @IBOutlet var savedImage: UIImageView!
-    @IBOutlet weak var sendButton: UIButton!
-    @IBOutlet var showResultsButton: UIButton!
-    
-    var receivedImage: UIImage!
-    var database: Database!
-    var receivedDesc: String?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if receivedImage != nil {
 
-            database.addPhase(PhaseInfo(description: receivedDesc!, imageSaved: UIGraphicsGetImageFromCurrentImageContext()))
+            database.append(DrawingPhase(drawing: UIGraphicsGetImageFromCurrentImageContext()))
+            database.append(SentencePhase(sentence: receivedDesc!))
+
             savedImage.image = receivedImage
             
-            database.listPhases()  //prints the database in console
+            listPhases(database) //prints the database in console
         }
         
-        if database.phases.count == 6 {
+        if database.count >= numberOfGameIterations {
             sendButton.hidden = true
             showResultsButton.hidden = false
         }
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    } 
 }

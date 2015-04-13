@@ -8,45 +8,62 @@
 
 import UIKit
 
-class ResultsViewController: UIViewController {
+class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var desc0: UILabel!
-    @IBOutlet weak var desc1: UILabel!
-    @IBOutlet weak var desc2: UILabel!
-    @IBOutlet weak var desc3: UILabel!
-    @IBOutlet weak var desc4: UILabel!
-    @IBOutlet weak var desc5: UILabel!
-    
-    @IBOutlet weak var image0: UIImageView!
-    @IBOutlet weak var image1: UIImageView!
-    @IBOutlet weak var image2: UIImageView!
-    @IBOutlet weak var image3: UIImageView!
-    @IBOutlet weak var image4: UIImageView!
-    @IBOutlet weak var image5: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
     
     var descArray: [UILabel] = []
     var imageArray: [UIImageView] = []
-    var database: Database!
+    var database: [Phase]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //arrays labels and imageviews
-        descArray = [
-            desc0, desc1, desc2, desc3, desc4, desc5
-        ]
-        imageArray = [
-            image0, image1, image2, image3, image4, image5
-        ]
         
-        for index in 0 ..< database.phases.count {
-            descArray[index].text = database.phases[index].description
-            imageArray[index].image = database.phases[index].imageSaved
+        self.tableView.contentInset = UIEdgeInsetsMake(10, -7.5, 0, 0)
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return database.count;
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+
+        var cell: UITableViewCell?
+        if indexPath.row % 2 == 0 {
+            let sentenceCell: SentenceCell = self.tableView.dequeueReusableCellWithIdentifier("SentenceCell") as! SentenceCell
+
+            let phase: SentencePhase = database[indexPath.row] as! SentencePhase
+            sentenceCell.sentenceLabel.text = phase.sentence
+            cell = sentenceCell
+        } else {
+            let drawingCell: DrawingCell = self.tableView.dequeueReusableCellWithIdentifier("DrawingCell") as! DrawingCell
+            
+            let phase: DrawingPhase = database[indexPath.row] as! DrawingPhase
+            drawingCell.drawingView.image = phase.drawing
+            cell = drawingCell
+        }
+        
+        return cell!
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row % 2 == 0 {
+            return 50
+        } else {
+            return 300
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        println("You selected cell #\(indexPath.row)!")
     }
+}
+
+class SentenceCell: UITableViewCell {
+    @IBOutlet weak var sentenceLabel: UILabel!
+}
+
+class DrawingCell: UITableViewCell {
+    @IBOutlet weak var drawingView: UIImageView!
 }
