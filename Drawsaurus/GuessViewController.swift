@@ -19,9 +19,12 @@ class GuessViewController: UIViewController {
     var database: [Phase]!
     var receivedDesc: String?
     
-    let numberOfGameIterations = 3
+    let numberOfGameIterations = 5
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        database.append(SentencePhase(sentence: guessTextField.text))
+        
         if segue.identifier == "GuessViewtoDrawView" {
             let drawVC = segue.destinationViewController as? DrawViewController
             drawVC?.desc = guessTextField.text
@@ -36,9 +39,6 @@ class GuessViewController: UIViewController {
         super.viewDidLoad()
         
         if receivedImage != nil {
-
-            database.append(DrawingPhase(drawing: UIGraphicsGetImageFromCurrentImageContext()))
-            database.append(SentencePhase(sentence: receivedDesc!))
 
             savedImage.image = receivedImage
             

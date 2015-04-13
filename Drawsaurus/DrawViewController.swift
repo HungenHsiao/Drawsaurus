@@ -13,6 +13,8 @@ class DrawViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "DrawViewtoGuessView" {
             let guessVC = segue.destinationViewController as? GuessViewController
+            
+            database.append(DrawingPhase(drawing: mainImage.image!))
             guessVC?.receivedImage = mainImage.image
             guessVC?.database = database
             guessVC?.receivedDesc = desc
@@ -21,7 +23,7 @@ class DrawViewController: UIViewController {
     
     @IBOutlet var descLabel: UILabel!
     @IBOutlet var mainImage: UIImageView!
-    @IBOutlet var tempDrawImage: UIImageView!
+ //   @IBOutlet var tempDrawImage: UIImageView!
         
     var database: [Phase]!
 
@@ -94,7 +96,7 @@ class DrawViewController: UIViewController {
             
             UIGraphicsBeginImageContext(self.view.frame.size)
             
-            self.tempDrawImage.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+            self.mainImage.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
             CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
             CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y)
             CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound)
@@ -103,8 +105,8 @@ class DrawViewController: UIViewController {
             CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeNormal)
             
             CGContextStrokePath(UIGraphicsGetCurrentContext())
-            self.tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext()
-            self.tempDrawImage.alpha = opacity
+            self.mainImage.image = UIGraphicsGetImageFromCurrentImageContext()
+            self.mainImage.alpha = opacity
             lastPoint = currentPoint
         }
     }
@@ -114,7 +116,7 @@ class DrawViewController: UIViewController {
         if !mouseSwiped {
             UIGraphicsBeginImageContext(self.view.frame.size)
             
-            self.tempDrawImage.image?.drawInRect(rect)
+            self.mainImage.image?.drawInRect(rect)
             CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound)
             CGContextSetLineWidth(UIGraphicsGetCurrentContext(), brush)
             CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), red, green, blue, opacity)
@@ -122,10 +124,10 @@ class DrawViewController: UIViewController {
             CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
             CGContextStrokePath(UIGraphicsGetCurrentContext())
             CGContextFlush(UIGraphicsGetCurrentContext())
-            self.tempDrawImage.image = UIGraphicsGetImageFromCurrentImageContext()
+            self.mainImage.image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
         }
-        
+     /*
         //merge tempDrawImage with mainImage
         UIGraphicsBeginImageContext(self.view.frame.size)
         self.mainImage.image?.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: 1.0)
@@ -134,6 +136,6 @@ class DrawViewController: UIViewController {
         
         self.tempDrawImage.image = nil
         UIGraphicsEndImageContext()
-     
+     */
     }
 }

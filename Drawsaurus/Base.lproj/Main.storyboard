@@ -95,9 +95,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c9a-Gm-5Dn" userLabel="mainImage">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h3F-ob-E4T" userLabel="tempDrawImage">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Draw:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Phd-r8-Iyj">
                                 <rect key="frame" x="11" y="36" width="45" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -180,7 +177,6 @@
                     <connections>
                         <outlet property="descLabel" destination="4R9-JJ-Atl" id="xkt-cC-RWS"/>
                         <outlet property="mainImage" destination="c9a-Gm-5Dn" id="QvS-Qd-jaB"/>
-                        <outlet property="tempDrawImage" destination="h3F-ob-E4T" id="d8W-oM-qxs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LWu-B9-ib2" userLabel="First Responder" sceneMemberID="firstResponder"/>
