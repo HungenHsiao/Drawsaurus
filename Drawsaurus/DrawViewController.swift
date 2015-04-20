@@ -13,8 +13,12 @@ class DrawViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "DrawViewtoGuessView" {
             let guessVC = segue.destinationViewController as? GuessViewController
-            
-            database.append(DrawingPhase(drawing: mainImage.image!))
+            if mainImage.image == nil {
+                database.append(DrawingPhase(drawing: UIImage(named: "placeholder")!))
+            } else {
+                database.append(DrawingPhase(drawing: mainImage.image!))
+    
+            }
             guessVC?.receivedImage = mainImage.image
             guessVC?.database = database
             guessVC?.receivedDesc = desc
@@ -23,8 +27,7 @@ class DrawViewController: UIViewController {
     
     @IBOutlet var descLabel: UILabel!
     @IBOutlet var mainImage: UIImageView!
- //   @IBOutlet var tempDrawImage: UIImageView!
-        
+    
     var database: [Phase]!
 
     var red: CGFloat!
@@ -83,7 +86,7 @@ class DrawViewController: UIViewController {
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         mouseSwiped = false
         if let currentTouch = touches.first as? UITouch {
-            lastPoint = currentTouch.locationInView(self.view)
+            lastPoint = currentTouch.locationInView(self.mainImage)
         }
     }
     
@@ -92,11 +95,11 @@ class DrawViewController: UIViewController {
         
         if let currentTouch = touches.first as? UITouch {
             
-            var currentPoint = currentTouch.locationInView(self.view)
+            var currentPoint = currentTouch.locationInView(self.mainImage)
             
-            UIGraphicsBeginImageContext(self.view.frame.size)
+            UIGraphicsBeginImageContext(self.mainImage.frame.size)
             
-            self.mainImage.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+            self.mainImage.image?.drawInRect(CGRectMake(0, 0, self.mainImage.frame.size.width, self.mainImage.frame.size.height))
             CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
             CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y)
             CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound)
@@ -112,9 +115,9 @@ class DrawViewController: UIViewController {
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+        let rect = CGRectMake(0, 0, self.mainImage.frame.size.width, self.mainImage.frame.size.height)
         if !mouseSwiped {
-            UIGraphicsBeginImageContext(self.view.frame.size)
+            UIGraphicsBeginImageContext(self.mainImage.frame.size)
             
             self.mainImage.image?.drawInRect(rect)
             CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound)
@@ -127,15 +130,7 @@ class DrawViewController: UIViewController {
             self.mainImage.image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
         }
-     /*
-        //merge tempDrawImage with mainImage
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        self.mainImage.image?.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: 1.0)
-        self.tempDrawImage.image?.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: opacity)
-        self.mainImage.image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        self.tempDrawImage.image = nil
-        UIGraphicsEndImageContext()
-     */
     }
 }
+
+

@@ -38,6 +38,9 @@
 		DA0E37961ACB976400EA8D22 /* Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = DA0E37801ACB976400EA8D22 /* Yellow.png */; };
 		DA0E37981ACB9B0F00EA8D22 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E37971ACB9B0F00EA8D22 /* DrawViewController.swift */; };
 		DA0E379A1ACCB1D300EA8D22 /* GuessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E37991ACCB1D300EA8D22 /* GuessViewController.swift */; };
+		DA398A741ADCE59D00838864 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA398A711ADCE59D00838864 /* FBSDKCoreKit.framework */; };
+		DA398A751ADCE59D00838864 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA398A721ADCE59D00838864 /* FBSDKLoginKit.framework */; };
+		DA398A761ADCE59D00838864 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA398A731ADCE59D00838864 /* FBSDKShareKit.framework */; };
 		DA448D591ACDBAC500AA9C74 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA448D581ACDBAC500AA9C74 /* Database.swift */; };
 		DA5FF01E1AD495D6002B885C /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FF01D1AD495D6002B885C /* ResultsViewController.swift */; };
 		DACE400D1ACCEC2E007AA80D /* PhaseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE400C1ACCEC2E007AA80D /* PhaseInfo.swift */; };
@@ -89,6 +92,10 @@
 		DA0E37801ACB976400EA8D22 /* Yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Yellow.png; sourceTree = "<group>"; };
 		DA0E37971ACB9B0F00EA8D22 /* DrawViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
 		DA0E37991ACCB1D300EA8D22 /* GuessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessViewController.swift; sourceTree = "<group>"; };
+		DA398A681ADCE0CB00838864 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Bridging-Header.h"; path = "Drawsaurus/Bridging-Header.h"; sourceTree = "<group>"; };
+		DA398A711ADCE59D00838864 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		DA398A721ADCE59D00838864 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		DA398A731ADCE59D00838864 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		DA448D581ACDBAC500AA9C74 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		DA5FF01D1AD495D6002B885C /* ResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		DACE400C1ACCEC2E007AA80D /* PhaseInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhaseInfo.swift; sourceTree = "<group>"; };
@@ -99,6 +106,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA398A741ADCE59D00838864 /* FBSDKCoreKit.framework in Frameworks */,
+				DA398A751ADCE59D00838864 /* FBSDKLoginKit.framework in Frameworks */,
+				DA398A761ADCE59D00838864 /* FBSDKShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +125,10 @@
 		DA0E37391ACB6CE500EA8D22 = {
 			isa = PBXGroup;
 			children = (
+				DA398A711ADCE59D00838864 /* FBSDKCoreKit.framework */,
+				DA398A721ADCE59D00838864 /* FBSDKLoginKit.framework */,
+				DA398A731ADCE59D00838864 /* FBSDKShareKit.framework */,
+				DA398A681ADCE0CB00838864 /* Bridging-Header.h */,
 				DA0E37441ACB6CE500EA8D22 /* Drawsaurus */,
 				DA0E375D1ACB6CE500EA8D22 /* DrawsaurusTests */,
 				DA0E37431ACB6CE500EA8D22 /* Products */,
@@ -456,9 +470,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Shark/Documents/FacebookSDK,
+				);
 				INFOPLIST_FILE = Drawsaurus/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Drawsaurus/Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -466,9 +485,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Shark/Documents/FacebookSDK,
+				);
 				INFOPLIST_FILE = Drawsaurus/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Drawsaurus/Bridging-Header.h";
 			};
 			name = Release;
 		};
