@@ -51,7 +51,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         if indexPath.row % 2 == 0 {
             return 50
         } else {
-            return 460
+            return 370
         }
     }
     

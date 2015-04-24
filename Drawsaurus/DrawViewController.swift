@@ -33,7 +33,7 @@ class DrawViewController: UIViewController {
     var red: CGFloat!
     var green: CGFloat!
     var blue: CGFloat!
-    var brush: CGFloat = 10.0
+    var brush: CGFloat = 5.0
     var lastPoint: CGPoint!
     var opacity: CGFloat = 1.0
     var desc: String = ""
@@ -63,6 +63,11 @@ class DrawViewController: UIViewController {
             red = 0/255.0
             green = 0/255.0
             blue = 255/255.0
+        case 3:
+            red = 0/255.0
+            green = 255/255.0
+            blue = 0/255.0
+
         default:
             red = 0/255.0
             green = 0/255.0
@@ -73,13 +78,13 @@ class DrawViewController: UIViewController {
     @IBAction func brushSizeSelected(sender: UIButton) {
         switch sender.tag {
         case 0:
-            brush = 3.0
+            brush = 1.0
         case 1:
-            brush = 10.0
+            brush = 5.0
         case 2:
-            brush = 30.0
+            brush = 13.0
         default:
-            brush = 10.0
+            brush = 5.0
         }
     }
     

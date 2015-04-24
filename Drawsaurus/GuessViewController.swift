@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GuessViewController: UIViewController {
+class GuessViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var guessTextField: UITextField!
     @IBOutlet var savedImage: UIImageView!
@@ -19,7 +19,7 @@ class GuessViewController: UIViewController {
     var database: [Phase]!
     var receivedDesc: String?
     
-    let numberOfGameIterations = 5
+    let numberOfGameIterations = 3
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -49,5 +49,19 @@ class GuessViewController: UIViewController {
             sendButton.hidden = true
             showResultsButton.hidden = false
         }
+        
+        //assigns textfield delegate to VC
+        self.guessTextField.delegate = self
+    }
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        //rids of keyboard when tapped anywhere but keyboard
+        self.view.endEditing(true)
+    }
+    
+    //UITextField Delegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
     }
 }

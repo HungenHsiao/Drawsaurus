@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import iAd
 
-class MainMenuViewController: UIViewController, FBSDKLoginButtonDelegate {
+class MainMenuViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate, ADBannerViewDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "VCtoDrawView" {
@@ -17,12 +18,34 @@ class MainMenuViewController: UIViewController, FBSDKLoginButtonDelegate {
             database.append(SentencePhase(sentence: textField.text))
             drawVC?.desc = textField.text
             drawVC?.database = database
+        } else if segue.identifier == "MainVCtoFriendsVC" {
+            let friendsVC = segue.destinationViewController as? FriendsViewController
+            friendsVC?.friendList = friendsDB
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup aqfter loading the view, typically from a nib.
+        submitDesc.hidden = true
+        labelBG.hidden = true
+        textField.hidden = true
+        friendButton.hidden = true
+        friendLabel.hidden = true
+        //banner is hidden as soon as view loads b/c the block will be blank when the view loads
+        adBanner.hidden = true
+        
+        //assign delegate to self (the MainMenuViewController); allows us to load our banner in and out of the scene even when there's nothing inside
+        adBanner.delegate = self
+        
+        //allows VC to display the bannerAds
+        self.canDisplayBannerAds = true
+        
+        if selectedFriend != nil {
+            if selectedFriend != "" {
+                friendLabel.text = selectedFriend!
+            }
+        }
         
         if (FBSDKAccessToken.currentAccessToken() != nil) {
             // User is already logged in, do work such as go to next view controller.
@@ -39,6 +62,26 @@ class MainMenuViewController: UIViewController, FBSDKLoginButtonDelegate {
             loginView.readPermissions = ["public_profile", "email", "user_friends"]
             loginView.delegate = self
         }
+        
+        //assigns textfield delegate to VC
+        self.textField.delegate = self
+    }
+    
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        NSLog("Error!")
+    }
+    
+    func bannerViewWillLoadAd(banner: ADBannerView!) {
+        //will load ad
+    }
+    
+    //animate on and into our scene; apple requires ad to be animated onto the scene instead of popped up
+    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
+        return true
+    }
+    
+    func bannerViewDidLoadAd(banner: ADBannerView!) {
+        adBanner.hidden = false
     }
    
     
@@ -51,25 +94,27 @@ class MainMenuViewController: UIViewController, FBSDKLoginButtonDelegate {
     @IBOutlet var labelBG: UILabel!
     @IBOutlet var textField: UITextField!
     @IBOutlet var newGameButton: UIButton!
+    @IBOutlet weak var friendButton: UIButton!
+    @IBOutlet weak var friendLabel: UILabel!
     
+    @IBOutlet weak var adBanner: ADBannerView!
     @IBOutlet weak var userWelcomeLabel: UILabel!
     
     var database: [Phase] = []
+    var selectedFriend: String?
+    var friendsDB: [[String:AnyObject]]?
     
     @IBAction func newGame() {
         newGameButton.hidden = true
         submitDesc.hidden = false
         labelBG.hidden = false
         textField.hidden = false
+        friendButton.hidden = false
+        friendLabel.hidden = false
     }
-    
-    
     
     //Facebook Delegate
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        
-        // println(result)
-        
         returnUserData()
         
         if ((error) != nil) {
@@ -90,7 +135,9 @@ class MainMenuViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         println("User Logged Out")
         userWelcomeLabel.text = "Please log in to play"
-        newGameButton.hidden = true
+        
+        //make the newGameButton hidden true later
+        newGameButton.hidden = false
     }
     
     func returnUserData() {
@@ -105,10 +152,7 @@ class MainMenuViewController: UIViewController, FBSDKLoginButtonDelegate {
                 
                 let userName : NSString = result.valueForKey("first_name") as! NSString
                 self.userWelcomeLabel.text = "Welcome \(String(userName))!"
-                let userEmail : NSString = result.valueForKey("email") as! NSString
-           //     let friendList: NSString = result.valueForKey("invitable_friends") as! NSString
-            //    println(friendList)
-            //    println("User Name is: \(userName)")
+            //    let userEmail : NSString = result.valueForKey("email") as! NSString
              //   println("User Email is: \(userEmail)")
             }
         })
@@ -121,8 +165,21 @@ class MainMenuViewController: UIViewController, FBSDKLoginButtonDelegate {
                 println("Error: \(error)")
             } else {
                 println("fetched user friends: \(result)")
+                let friendsData = result.valueForKey("data") as? [[String:AnyObject]]
+                self.friendsDB = friendsData
             }
         })
+    }
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        //rids of keyboard when tapped anywhere but keyboard
+        self.view.endEditing(true)
+    }
+    
+    //UITextField Delegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
     }
 }
 
