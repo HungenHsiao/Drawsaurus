@@ -12,9 +12,9 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var friendsTableView: UITableView!
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "FriendVCtoMainVC" {
-            let mainVC = segue.destinationViewController as? MainMenuViewController
-            mainVC?.selectedFriend = selectedFriend
+        if segue.identifier == "FriendVCtoNewGameVC" {
+            let newGameVC = segue.destinationViewController as? NewGameViewController
+            newGameVC?.selectedFriend = selectedFriend
         }
     }
     
@@ -30,6 +30,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let currentFriend = friendList![i]
             friendDB.append((currentFriend["name"] as? String)!)
         }
+        
         
         self.friendsTableView.contentInset = UIEdgeInsetsMake(10, -7.5, 0, 0)
         self.friendsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")

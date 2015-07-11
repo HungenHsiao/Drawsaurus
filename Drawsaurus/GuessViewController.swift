@@ -50,6 +50,10 @@ class GuessViewController: UIViewController, UITextFieldDelegate {
             showResultsButton.hidden = false
         }
         
+        if database.count == 1 {
+ //           savedImage.image = database[1] as? DrawingPhase
+        }
+        
         //assigns textfield delegate to VC
         self.guessTextField.delegate = self
     }

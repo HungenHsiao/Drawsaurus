@@ -43,9 +43,14 @@
 		DA398A751ADCE59D00838864 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA398A721ADCE59D00838864 /* FBSDKLoginKit.framework */; };
 		DA398A761ADCE59D00838864 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA398A731ADCE59D00838864 /* FBSDKShareKit.framework */; };
 		DA448D591ACDBAC500AA9C74 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA448D581ACDBAC500AA9C74 /* Database.swift */; };
+		DA449B631B06461900816724 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA449B621B06461900816724 /* WelcomeViewController.swift */; };
 		DA5FF01E1AD495D6002B885C /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FF01D1AD495D6002B885C /* ResultsViewController.swift */; };
 		DA6CAF491AE5F33E008C8A90 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CAF481AE5F33E008C8A90 /* FriendsViewController.swift */; };
 		DACE400D1ACCEC2E007AA80D /* PhaseInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE400C1ACCEC2E007AA80D /* PhaseInfo.swift */; };
+		DAEF62211B12925600364E84 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF62201B12925600364E84 /* Timer.swift */; };
+		DAF7AC7C1B08211700730262 /* NewGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF7AC7B1B08211700730262 /* NewGameViewController.swift */; };
+		DAF8D8391B50BC6B00790C88 /* donatello.png in Resources */ = {isa = PBXBuildFile; fileRef = DAF8D8381B50BC6B00790C88 /* donatello.png */; };
+		DAF8D83B1B50C03C00790C88 /* draw_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = DAF8D83A1B50C03C00790C88 /* draw_bg.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,9 +105,14 @@
 		DA398A721ADCE59D00838864 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		DA398A731ADCE59D00838864 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		DA448D581ACDBAC500AA9C74 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		DA449B621B06461900816724 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WelcomeViewController.swift; path = ../WelcomeViewController.swift; sourceTree = "<group>"; };
 		DA5FF01D1AD495D6002B885C /* ResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		DA6CAF481AE5F33E008C8A90 /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		DACE400C1ACCEC2E007AA80D /* PhaseInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhaseInfo.swift; sourceTree = "<group>"; };
+		DAEF62201B12925600364E84 /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		DAF7AC7B1B08211700730262 /* NewGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewGameViewController.swift; path = ../NewGameViewController.swift; sourceTree = "<group>"; };
+		DAF8D8381B50BC6B00790C88 /* donatello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = donatello.png; sourceTree = "<group>"; };
+		DAF8D83A1B50C03C00790C88 /* draw_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = draw_bg.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,10 +140,7 @@
 		DA0E37391ACB6CE500EA8D22 = {
 			isa = PBXGroup;
 			children = (
-				DA004E231AE9D7150030966B /* iAd.framework */,
-				DA398A711ADCE59D00838864 /* FBSDKCoreKit.framework */,
-				DA398A721ADCE59D00838864 /* FBSDKLoginKit.framework */,
-				DA398A731ADCE59D00838864 /* FBSDKShareKit.framework */,
+				DA6EFA631B112C48006A256E /* App Frameworks */,
 				DA398A681ADCE0CB00838864 /* Bridging-Header.h */,
 				DA0E37441ACB6CE500EA8D22 /* Drawsaurus */,
 				DA0E375D1ACB6CE500EA8D22 /* DrawsaurusTests */,
@@ -154,12 +161,16 @@
 		DA0E37441ACB6CE500EA8D22 /* Drawsaurus */ = {
 			isa = PBXGroup;
 			children = (
+				DAF8D8381B50BC6B00790C88 /* donatello.png */,
+				DAF8D83A1B50C03C00790C88 /* draw_bg.png */,
 				DA0E37471ACB6CE500EA8D22 /* AppDelegate.swift */,
+				DA449B621B06461900816724 /* WelcomeViewController.swift */,
 				DA0E374C1ACB6CE500EA8D22 /* MainMenuViewController.swift */,
+				DAF7AC7B1B08211700730262 /* NewGameViewController.swift */,
+				DA6CAF481AE5F33E008C8A90 /* FriendsViewController.swift */,
 				DA0E37971ACB9B0F00EA8D22 /* DrawViewController.swift */,
 				DA0E37991ACCB1D300EA8D22 /* GuessViewController.swift */,
 				DA5FF01D1AD495D6002B885C /* ResultsViewController.swift */,
-				DA6CAF481AE5F33E008C8A90 /* FriendsViewController.swift */,
 				DA0E374E1ACB6CE500EA8D22 /* Main.storyboard */,
 				DA0E37511ACB6CE500EA8D22 /* Images.xcassets */,
 				DA0E37531ACB6CE500EA8D22 /* LaunchScreen.xib */,
@@ -167,6 +178,7 @@
 				DA0E37451ACB6CE500EA8D22 /* Supporting Files */,
 				DACE400C1ACCEC2E007AA80D /* PhaseInfo.swift */,
 				DA448D581ACDBAC500AA9C74 /* Database.swift */,
+				DAEF62201B12925600364E84 /* Timer.swift */,
 			);
 			path = Drawsaurus;
 			sourceTree = "<group>";
@@ -223,6 +235,17 @@
 				DA0E37801ACB976400EA8D22 /* Yellow.png */,
 			);
 			path = Graphics;
+			sourceTree = "<group>";
+		};
+		DA6EFA631B112C48006A256E /* App Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DA004E231AE9D7150030966B /* iAd.framework */,
+				DA398A711ADCE59D00838864 /* FBSDKCoreKit.framework */,
+				DA398A721ADCE59D00838864 /* FBSDKLoginKit.framework */,
+				DA398A731ADCE59D00838864 /* FBSDKShareKit.framework */,
+			);
+			name = "App Frameworks";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,9 +340,11 @@
 				DA0E378D1ACB976400EA8D22 /* Opacity.png in Resources */,
 				DA0E37921ACB976400EA8D22 /* Setting-1.png in Resources */,
 				DA0E37551ACB6CE500EA8D22 /* LaunchScreen.xib in Resources */,
+				DAF8D8391B50BC6B00790C88 /* donatello.png in Resources */,
 				DA0E37861ACB976400EA8D22 /* DarkGreen.png in Resources */,
 				DA0E37911ACB976400EA8D22 /* Save-Small.png in Resources */,
 				DA0E37831ACB976400EA8D22 /* Blue.png in Resources */,
+				DAF8D83B1B50C03C00790C88 /* draw_bg.png in Resources */,
 				DA0E37841ACB976400EA8D22 /* Brown.png in Resources */,
 				DA0E37941ACB976400EA8D22 /* thickness.png in Resources */,
 				DA0E37811ACB976400EA8D22 /* b.png in Resources */,
@@ -348,7 +373,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA0E374D1ACB6CE500EA8D22 /* MainMenuViewController.swift in Sources */,
+				DA449B631B06461900816724 /* WelcomeViewController.swift in Sources */,
 				DA6CAF491AE5F33E008C8A90 /* FriendsViewController.swift in Sources */,
+				DAEF62211B12925600364E84 /* Timer.swift in Sources */,
 				DACE400D1ACCEC2E007AA80D /* PhaseInfo.swift in Sources */,
 				DA0E379A1ACCB1D300EA8D22 /* GuessViewController.swift in Sources */,
 				DA0E374B1ACB6CE500EA8D22 /* Drawsaurus.xcdatamodeld in Sources */,
@@ -356,6 +383,7 @@
 				DA448D591ACDBAC500AA9C74 /* Database.swift in Sources */,
 				DA0E37481ACB6CE500EA8D22 /* AppDelegate.swift in Sources */,
 				DA5FF01E1AD495D6002B885C /* ResultsViewController.swift in Sources */,
+				DAF7AC7C1B08211700730262 /* NewGameViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

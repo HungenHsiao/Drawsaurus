@@ -9,77 +9,142 @@
 import UIKit
 import iAd
 
-class MainMenuViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate, ADBannerViewDelegate {
+class MainMenuViewController: UIViewController, ADBannerViewDelegate, UITableViewDelegate, UITableViewDataSource {
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.identifier == "VCtoDrawView" {
+//            let drawVC = segue.destinationViewController as? DrawViewController
+//            
+//            database.append(SentencePhase(sentence: textField.text))
+//            drawVC?.desc = textField.text
+//            drawVC?.database = database
+//        
+//        } 
+//    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "VCtoDrawView" {
-            let drawVC = segue.destinationViewController as? DrawViewController
+        if segue.identifier == "MainVCtoNewGameVC" {
+            let newGameVC = segue.destinationViewController as? NewGameViewController
             
-            database.append(SentencePhase(sentence: textField.text))
-            drawVC?.desc = textField.text
-            drawVC?.database = database
-        } else if segue.identifier == "MainVCtoFriendsVC" {
-            let friendsVC = segue.destinationViewController as? FriendsViewController
-            friendsVC?.friendList = friendsDB
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup aqfter loading the view, typically from a nib.
-        submitDesc.hidden = true
-        labelBG.hidden = true
-        textField.hidden = true
-        friendButton.hidden = true
-        friendLabel.hidden = true
-        //banner is hidden as soon as view loads b/c the block will be blank when the view loads
-        adBanner.hidden = true
-        
-        //assign delegate to self (the MainMenuViewController); allows us to load our banner in and out of the scene even when there's nothing inside
-        adBanner.delegate = self
-        
-        //allows VC to display the bannerAds
-        self.canDisplayBannerAds = true
-        
-        if selectedFriend != nil {
-            if selectedFriend != "" {
-                friendLabel.text = selectedFriend!
+            newGameVC?.friendsDB = friendsDB as? [[String : AnyObject]]
+            
+        } else if segue.identifier == "MainVtoDrawV" {
+            let drawVC = segue.destinationViewController as? DrawViewController
+            drawVC?.database = selectedGame
+            if selectedGame!.count % 2 != 0 {
+                drawVC?.desc = gameDesc!
+            }
+        } else if segue.identifier == "MainVtoGuessV" {
+            let guessVC = segue.destinationViewController as? GuessViewController
+            guessVC?.database = selectedGame
+            if selectedGame!.count == 2 {
+                guessVC?.receivedImage = gameImage!
             }
         }
-        
-        if (FBSDKAccessToken.currentAccessToken() != nil) {
-            // User is already logged in, do work such as go to next view controller.
-            let loginView : FBSDKLoginButton = FBSDKLoginButton()
-            self.view.addSubview(loginView)
-            loginView.center = CGPoint(x: 115, y: 50)
-            loginView.readPermissions = ["public_profile", "email", "user_friends"]
-            loginView.delegate = self
-
-        } else {
-            let loginView : FBSDKLoginButton = FBSDKLoginButton()
-            self.view.addSubview(loginView)
-            loginView.center = CGPoint(x: 115, y: 50)
-            loginView.readPermissions = ["public_profile", "email", "user_friends"]
-            loginView.delegate = self
-        }
-        
-        //assigns textfield delegate to VC
-        self.textField.delegate = self
     }
     
+    
+    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        // Do any additional setup aqfter loading the view, typically from a nib.
+ //       newGameView.hidden = true
+        
+        getGameData()
+        
+        //iAd banner
+        adBanner.hidden = true
+        adBanner.delegate = self
+        self.canDisplayBannerAds = true
+        
+        println("MainVC")
+        println(friendsDB)
+        
+        self.existingGameTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        startTimer()
+        
+    }
+    
+    @IBOutlet var newGameButton: UIButton!
+    var friendsDB = []
+    var existingGameDB = ["Game #1", "Game #2"]
+    var existingGameDatabase: [[Phase]] = [[SentencePhase(sentence: "life sucks and then we die."), DrawingPhase(drawing: UIImage(named: "life.png")!)], [SentencePhase(sentence: "dog eat dog world.")]]
+    
+    
+//    func retrieveGame(gameData: AnyObject) {
+//        var turns = gameData.count
+//        var temporaryPhaseArray: [Phase] = []
+//        for (var i = 0; i < turns; i++) {
+//        
+//            if i % 2 == 0 {
+//                var gameInfo = gameData[i]["guess"] as? String
+//                temporaryPhaseArray.append(SentencePhase(sentence: gameInfo!))
+//            } else {
+//                var gameInfo = gameData[i]["drawing"] as? String
+//                let url: NSURL = NSURL(string: gameInfo!)!
+//                let data = NSData(contentsOfURL: url)
+//                temporaryPhaseArray.append(DrawingPhase(drawing: UIImage(data: data!)!))
+//            }
+//        }
+//        println(temporaryPhaseArray)
+//
+//        self.existingGameDatabase.append(temporaryPhaseArray)
+//        self.existingGameDB.append("Game #3")
+//        println(self.existingGameDatabase)
+//    }
+//    
+    
+    func getGameData() {
+        
+        let url = NSURL(string:"http://localhost:8000/turns.json")
+        var sharedSession = NSURLSession.sharedSession()
+        let downloadTask: NSURLSessionDownloadTask = sharedSession.downloadTaskWithURL(url!, completionHandler: { (location: NSURL!, response: NSURLResponse!, error: NSError!) -> Void in
+            if error == nil {
+                let dataObject = NSData(contentsOfURL: location)
+                let gameData: AnyObject? = NSJSONSerialization.JSONObjectWithData(dataObject!, options: nil, error: nil)
+                println(gameData)
+                println(gameData!.count)
+                //self.retrieveGame(gameData!)
+                var turns = gameData!.count
+                var temporaryPhaseArray: [Phase] = []
+                for (var i = 0; i < turns; i++) {
+                    
+                    if i % 2 == 0 {
+                        var gameInfo = gameData![i]["guess"] as? String
+                        temporaryPhaseArray.append(SentencePhase(sentence: gameInfo!))
+                    } else {
+                        var gameInfo = gameData![i]["drawing"] as? String
+                        let url: NSURL = NSURL(string: gameInfo!)!
+                        let data = NSData(contentsOfURL: url)
+                        temporaryPhaseArray.append(DrawingPhase(drawing: UIImage(data: data!)!))
+                    }
+                }
+                
+                self.existingGameDatabase.append(temporaryPhaseArray)
+                self.existingGameDB.append("Game #3")
+                println(self.existingGameDatabase)
+                println(self.existingGameDB)
+              //  var gameInfo = gameData![0]["guess"] as! String
+              //  self.existingGameDatabase.append([SentencePhase(sentence: gameInfo)])
+              //  self.existingGameDB.append("Game #3")
+            }
+        })
+        downloadTask.resume()
+    }
+    
+    //iAd stuff
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        NSLog("Error!")
+       // NSLog("Error!")
     }
-    
     func bannerViewWillLoadAd(banner: ADBannerView!) {
         //will load ad
     }
-    
     //animate on and into our scene; apple requires ad to be animated onto the scene instead of popped up
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
         return true
     }
-    
     func bannerViewDidLoadAd(banner: ADBannerView!) {
         adBanner.hidden = false
     }
@@ -90,96 +155,87 @@ class MainMenuViewController: UIViewController, FBSDKLoginButtonDelegate, UIText
         //Dispose of any resources that can be recreated.
     }
     
-    @IBOutlet var submitDesc: UIButton!
-    @IBOutlet var labelBG: UILabel!
-    @IBOutlet var textField: UITextField!
-    @IBOutlet var newGameButton: UIButton!
-    @IBOutlet weak var friendButton: UIButton!
-    @IBOutlet weak var friendLabel: UILabel!
-    
-    @IBOutlet weak var adBanner: ADBannerView!
-    @IBOutlet weak var userWelcomeLabel: UILabel!
-    
-    var database: [Phase] = []
-    var selectedFriend: String?
-    var friendsDB: [[String:AnyObject]]?
-    
-    @IBAction func newGame() {
-        newGameButton.hidden = true
-        submitDesc.hidden = false
-        labelBG.hidden = false
-        textField.hidden = false
-        friendButton.hidden = false
-        friendLabel.hidden = false
+
+    @IBAction func refresh(sender: UIButton) {
+        self.existingGameTableView.reloadData()
     }
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var existingGameTableView: UITableView!
+    @IBOutlet weak var adBanner: ADBannerView!
+    var selectedGame: [Phase]?
+    var gameDesc: String?
+    var gameImage: UIImage?
     
-    //Facebook Delegate
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        returnUserData()
-        
-        if ((error) != nil) {
-            // Process error
-        } else if result.isCancelled {
-            // Handle cancellations
-        } else {
-            // If you ask for multiple permissions at once, you
-            // should check if specific permissions missing
-            if result.grantedPermissions.contains("email") {
-                // Do work
-                println("User Logged In")
-                newGameButton.hidden = false
+    @IBAction func continueGame(sender: UIButton) {
+        if selectedGame != nil {
+            if selectedGame!.count % 2 == 0 {
+                self.performSegueWithIdentifier("MainVtoGuessV", sender: nil)
+            } else {
+                self.performSegueWithIdentifier("MainVtoDrawV", sender: nil)
             }
         }
     }
     
-    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        println("User Logged Out")
-        userWelcomeLabel.text = "Please log in to play"
+    var timer = NSTimer()
+    var timeRemaining = 9
+    
+    func countDown() {
+        timeRemaining--
+        timerLabel.text = "\(timeRemaining)"
+        if timeRemaining == 0 {
+            timer.invalidate()
+        }
+    }
+    
+    func startTimer() {
         
-        //make the newGameButton hidden true later
-        newGameButton.hidden = false
+        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("countDown"), userInfo: nil, repeats: true)
     }
     
-    func returnUserData() {
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
-        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-            
-            if ((error) != nil) {
-                // Process error
-                println("Error: \(error)")
-            } else {
-                println("fetched user: \(result)")
-                
-                let userName : NSString = result.valueForKey("first_name") as! NSString
-                self.userWelcomeLabel.text = "Welcome \(String(userName))!"
-            //    let userEmail : NSString = result.valueForKey("email") as! NSString
-             //   println("User Email is: \(userEmail)")
-            }
-        })
+    func stopTimer() {
         
-        let graphRequest2 : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me/friends", parameters: nil)
-        graphRequest2.startWithCompletionHandler({ (connection, result, error) -> Void in
+    }
+    
+    @IBAction func newGame() {
+
+    }
+    
+
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return existingGameDB.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell: UITableViewCell?
+        let existingGameCell: ExistingGameCell = self.existingGameTableView.dequeueReusableCellWithIdentifier("ExistingGameCell") as! ExistingGameCell
+        existingGameCell.existingGameLabel.text = existingGameDB[indexPath.row]
+        cell = existingGameCell
+        return cell!
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let rowHeight: CGFloat = 25
+        return rowHeight
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        println("You selected friend #\(indexPath.row)!")
+        selectedGame = existingGameDatabase[indexPath.row]
+        var gameDescription: SentencePhase = selectedGame!.first as! SentencePhase
+        gameDesc = gameDescription.sentence
+        if selectedGame!.count == 2 {
+            var gamePicture: DrawingPhase = selectedGame!.last as! DrawingPhase
+            gameImage = gamePicture.drawing
             
-            if ((error) != nil) {
-                // Process error
-                println("Error: \(error)")
-            } else {
-                println("fetched user friends: \(result)")
-                let friendsData = result.valueForKey("data") as? [[String:AnyObject]]
-                self.friendsDB = friendsData
-            }
-        })
-    }
-    
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        //rids of keyboard when tapped anywhere but keyboard
-        self.view.endEditing(true)
-    }
-    
-    //UITextField Delegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return false
+        } else {
+            var gameClue: SentencePhase = selectedGame!.last as! SentencePhase
+            gameDesc = gameClue.sentence
+            println(gameDesc!)
+        }
     }
 }
 
+class ExistingGameCell: UITableViewCell {
+    @IBOutlet weak var existingGameLabel: UILabel!
+}
